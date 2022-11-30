@@ -4,7 +4,6 @@ const router = express.Router();
 
 router.get('/packet', (req, res) => {
     const data = fs.readFileSync('./cap.json', 'utf-8').split('\n').filter(Boolean);
-    console.log(data);
     const packetData = [
         '[',
         data.join(','),
