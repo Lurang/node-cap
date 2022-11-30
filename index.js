@@ -1,6 +1,7 @@
 const Cap = require('cap').Cap;
 const decoders = require('cap').decoders;
 const fs = require('fs');
+const {v4} = require('uuid');
 const {ICMPV4} = require('./decoder');
 const PROTOCOL = decoders.PROTOCOL;
 
@@ -55,6 +56,7 @@ c.on('packet', (nbytes, trunc) => {
 
 
           result = {
+            id: v4(),
             src: ret.info.srcaddr,
             dst: ret.info.dstaddr,
             sport: tcp.info.srcport,
@@ -73,6 +75,7 @@ c.on('packet', (nbytes, trunc) => {
         const udp = decoders.UDP(buffer, ret.offset);
         const payload = bufToStr(Buffer.from(new Uint8Array(buffer).slice(udp.offset, udp.offset + udp.info.length)));
         result = {
+          id: v4(),
           src: ret.info.srcaddr,
           dst: ret.info.dstaddr,
           sport: udp.info.srcport,
@@ -87,6 +90,7 @@ c.on('packet', (nbytes, trunc) => {
         const length = ret.info.totallen;
         const payload = Buffer.from(new Uint8Array(buffer).slice(icmp.offset, length));
         result = {
+          id: v4(),
           src: ret.info.srcaddr,
           dst: ret.info.dstaddr,
           protocol: 'ICMP',
