@@ -73,7 +73,7 @@ c.on('packet', (nbytes, trunc) => {
         }
       } else if (ret.info.protocol === PROTOCOL.IP.UDP) {
         const udp = decoders.UDP(buffer, ret.offset);
-        const payload = bufToStr(Buffer.from(new Uint8Array(buffer).slice(udp.offset, udp.offset + udp.info.length)));
+        const payload = Buffer.from(new Uint8Array(buffer).slice(udp.offset, udp.offset + udp.info.length));
         result = {
           id: v4(),
           src: ret.info.srcaddr,
