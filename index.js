@@ -120,4 +120,4 @@ app.use(express.static(path.join(__dirname, 'build')));
 // });
 app.use('/api', require('./api'));
 
-app.listen(3001);
+app.listen(3000);
