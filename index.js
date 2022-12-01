@@ -55,7 +55,6 @@ c.on('packet', (nbytes, trunc) => {
           const tcp = decoders.TCP(buffer, ret.offset);
           const payload = Buffer.from(new Uint8Array(buffer).slice(tcp.offset, tcp.offset + datalen - tcp.hdrlen));
 
-
           result = {
             id: v4(),
             src: ret.info.srcaddr,
@@ -116,8 +115,6 @@ const path = require('path')
 const app = express();
 
 app.use(express.static(path.join(__dirname, 'build')));
-// app.get('/', (req, res) => {
-// });
 app.use('/api', require('./api'));
 
 app.listen(3000);
