@@ -1,3 +1,4 @@
+
 const ICMPV4 = (b, offset) => {
     offset || (offset = 0);
 
@@ -25,12 +26,12 @@ const ICMPV4 = (b, offset) => {
         5: Redirect
         8: echo request
         11: time exceeded
-        30: traeroute
+        30: traceroute
         15~18: 정보 주고받기
     */
 
     // echo 요청 & echo 응답
-    if ([0, 8].includes(type)) {
+    if ([0, 8, 30].includes(type)) {
         // 2바이트 identifier
         const identifier = b.readUInt16BE(offset, true);
         offset += 2;

@@ -3,10 +3,11 @@ const decoders = require('cap').decoders;
 const fs = require('fs');
 const {v4} = require('uuid');
 const {ICMPV4} = require('./decoder');
+const config = require('./config.json');
 const PROTOCOL = decoders.PROTOCOL;
 
 const c = new Cap();
-const device = Cap.findDevice('14.35.70.156');
+const device = Cap.findDevice(config.ip);
 const filter = 'ip proto 1 or port 22 or port 53 or port 80';
 const bufSize = 10 * 1024 * 1024;
 const buffer = Buffer.alloc(bufSize);
@@ -110,8 +111,13 @@ c.on('packet', (nbytes, trunc) => {
 });
 
 const express = require('express');
+const path = require('path')
+
 const app = express();
 
+app.use(express.static(path.join(__dirname, 'build')));
+// app.get('/', (req, res) => {
+// });
 app.use('/api', require('./api'));
 
 app.listen(3001);
